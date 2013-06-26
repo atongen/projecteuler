@@ -4,44 +4,35 @@ import (
   "fmt"
 )
 
-var p3primeMap = make(map[int]bool)
-
-func p3isPrime(n int) bool {
-  if prime, ok := p3primeMap[n]; ok {
-    return prime
-  } else {
-    for i := 2; i < n/2; i++ {
+func p3isPrime(n uint64) bool {
+  if n > 2 {
+    var i uint64 = 2
+    for ; i < n/2; i++ {
       if n % i == 0 {
-        p3primeMap[n] = false
         return false
       }
     }
-    p3primeMap[n] = true
-    return true
   }
-}
-
-func p3getFactors(n int) (factors []int) {
-  factors = make([]int, n/2)
-  for i := n/2; i >= 1; i-- {
-    if n % i == 0 {
-      pos := len(factors)
-      fmt.Println(pos)
-      if pos > cap(factors) {
-        factors = append(factors, i)
-      } else {
-        factors[len(factors)+1] = i
-      }
-    }
-  }
-  return
+  return true
 }
 
 func runP3() {
-  ultimate := 600851475143
-  for factor := range p3getFactors(ultimate) {
-    if p3isPrime(factor) {
-      fmt.Println(factor)
+  var ultimate uint64 = 600851475143
+  fmt.Printf("Largest prime factor of %d\n", ultimate)
+
+  var i uint64 = ultimate / 2
+  if i % 2 == 0 {
+    i--
+  }
+  for ; i > 2; i -= 2 {
+    if (i-1) % 1000000 == 0 {
+      fmt.Printf("%d...\n", i)
+    }
+    if ultimate % i == 0 {
+      if p3isPrime(i) {
+        fmt.Println(i)
+        break
+      }
     }
   }
 }
