@@ -22,7 +22,7 @@ func runP4() {
   largest := 0
   largest_i := 0
   largest_j := 0
-  for i := 999; i > 0; i-- {
+  for i := 999; i >= 100; i-- {
     for j := 999; j >= i; j-- {
       val := i*j
       if p4isPalindrome(val) {
