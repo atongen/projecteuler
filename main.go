@@ -20,6 +20,9 @@ func runProblem(num int) (err error) {
   case 4:
     runP4()
     return nil
+  case 5:
+    runP5()
+    return nil
   }
   return errors.New("No problem!")
 }
