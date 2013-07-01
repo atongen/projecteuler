@@ -23,6 +23,12 @@ func runProblem(num int) (err error) {
   case 5:
     runP5()
     return nil
+  case 6:
+    runP6()
+    return nil
+  case 7:
+    runP7()
+    return nil
   }
   return errors.New("No problem!")
 }
