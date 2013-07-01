@@ -48,7 +48,9 @@ func runP5() {
   */
 
   for i := 20;; i += 20 {
-    fmt.Println(i)
+    if i % 2000000 == 0 {
+      fmt.Println(i)
+    }
     divisible := true
     for j := 19; j > 10; j-- {
       if i % j != 0 {
@@ -57,7 +59,7 @@ func runP5() {
       }
     }
     if divisible {
-      fmt.Println("Found it!")
+      fmt.Printf("Found it: %d\n", i)
       break
     }
   }
