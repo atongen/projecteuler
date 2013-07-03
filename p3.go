@@ -2,6 +2,7 @@ package main
 
 import (
   "fmt"
+  "math"
 )
 
 func p3nextPrime(n uint64) uint64 {
@@ -16,7 +17,8 @@ func p3nextPrime(n uint64) uint64 {
 func p3isPrime(n uint64) bool {
   if n > 2 {
     var i uint64 = 2
-    for ; i <= n/2; i++ {
+    max := uint64(math.Sqrt(float64(n)))
+    for ; i <= max; i++ {
       if n % i == 0 {
         return false
       }
