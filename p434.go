@@ -15,7 +15,7 @@ However, one can make them rigid by adding diagonal edges to the cells. For exam
 
 Note that for the purposes of this problem, we do not consider changing the orientation of a diagonal edge or adding both diagonal edges to a cell as a different way of making a grid graph rigid.
 
-Let R(m,n) be the number of ways to make the m  n grid graph rigid. 
+Let R(m,n) be the number of ways to make the m  n grid graph rigid.
 E.g. R(2,3) = 19 and R(5,5) = 23679901
 
 Define S(N) as R(i,j) for 1  i, j  N.
@@ -28,28 +28,33 @@ http://www.calstatela.edu/faculty/sheubac/papers/Flopgrid.PDF
 
 import (
   "fmt"
+  "strconv"
+  matrix "github.com/skelterjohn/go.matrix"
 )
 
-type Grid struct {
-  m int
-  n int
-  data [][]bool
-}
-
-func p434newGrid(m int, n int) *Grid {
-  grid := Grid{m, n}
-  grid.data = make([][]bool, grid.m)
-  for _, i := range grid.data {
-    grid.data[i] = make([]bool, grid.n)
-  }
-  return &grid
-}
-
-
 func p434countRigid(m int, n int) int {
-  
+  if m > n {
+    // swap
+    m, n = n, m
+  }
+  data := make([]float64, m*n)
+  grid := matrix.MakeDenseMatrix(data, m, n)
+  for i := 0; i < m*n; i++ {
+    fmt.Println(i)
+    val := strconv.FormatInt(int64(i), 2)
+    fmt.Println(val)
+    for idx, char := range val {
+      if char == '0' {
+        data[idx] = 0
+      } else {
+        data[idx] = 1
+      }
+    }
+    fmt.Println(grid)
+  }
+  return 1111
 }
 
 func runP434() {
-
+  fmt.Println(p434countRigid(2,3))
 }
