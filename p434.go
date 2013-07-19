@@ -24,7 +24,9 @@ Find S(100), give your answer modulo 1000000033
 
 http://www.cs.sunysb.edu/~jgao/CSE590-fall05/notes/lecture3.pdf
 http://www.calstatela.edu/faculty/sheubac/papers/Flopgrid.PDF
+http://users.wpi.edu/~bservat/umap.pdf
 http://en.wikipedia.org/wiki/Kirchhoff%27s_theorem
+http://www.wpi.edu/Pubs/ETD/Available/etd-050106-132458/unrestricted/thesis7.pdf
 */
 
 import (
