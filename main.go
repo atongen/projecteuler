@@ -41,9 +41,6 @@ func runProblem(num int) (err error) {
   case 11:
     runP11()
     return nil
-  case 434:
-    runP434()
-    return nil
   }
   return errors.New("No problem!")
 }
