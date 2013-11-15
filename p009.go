@@ -30,3 +30,7 @@ func runP9() {
     }
   }
 }
+
+func init() {
+  addProb("9", func() { runP9() })
+}

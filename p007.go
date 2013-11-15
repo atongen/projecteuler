@@ -17,3 +17,7 @@ func runP7() {
     fmt.Printf("%d %d\n", i, p)
   }
 }
+
+func init() {
+  addProb("7", func() { runP7() })
+}

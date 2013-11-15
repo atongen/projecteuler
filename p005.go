@@ -64,3 +64,7 @@ func runP5() {
     }
   }
 }
+
+func init() {
+  addProb("5", func() { runP5() })
+}

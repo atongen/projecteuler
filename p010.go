@@ -21,3 +21,7 @@ func runP10() {
   }
   fmt.Println(sum)
 }
+
+func init() {
+  addProb("10", func() { runP10() })
+}

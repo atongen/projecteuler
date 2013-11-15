@@ -122,3 +122,7 @@ func runP11() {
   largest = p11LargestProduct(p11LeftDiagonalCombinations(data), largest)
   fmt.Println(largest)
 }
+
+func init() {
+  addProb("11", func() { runP11() })
+}

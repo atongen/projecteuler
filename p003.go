@@ -74,3 +74,7 @@ func runP3() {
   //  }
   //}
 }
+
+func init() {
+  addProb("3", func() { runP3() })
+}

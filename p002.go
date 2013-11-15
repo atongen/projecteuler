@@ -38,3 +38,7 @@ func runP2() {
   }
   fmt.Printf("Sum: %d\n", sum)
 }
+
+func init() {
+  addProb("2", func() { runP2() })
+}

@@ -39,3 +39,7 @@ func runP6() {
   c := a - b
   fmt.Printf("(%d) %d - %d = %d\n", r, a, b, c)
 }
+
+func init() {
+  addProb("6", func() { runP6() })
+}

@@ -36,3 +36,7 @@ func runP4() {
     }
   }
 }
+
+func init() {
+  addProb("4", func() { runP4() })
+}

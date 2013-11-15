@@ -13,3 +13,7 @@ func runP1() {
   }
   fmt.Println(sum)
 }
+
+func init() {
+  addProb("1", func() { runP1() })
+}
