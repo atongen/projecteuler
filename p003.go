@@ -1,31 +1,8 @@
 package main
 
 import (
-  "fmt"
-  "math"
+	"fmt"
 )
-
-func p3nextPrime(n uint64) uint64 {
-  var i uint64 = n+1
-  for ;; i++ {
-    if p3isPrime(i) {
-      return i
-    }
-  }
-}
-
-func p3isPrime(n uint64) bool {
-  if n > 2 {
-    var i uint64 = 2
-    max := uint64(math.Sqrt(float64(n)))
-    for ; i <= max; i++ {
-      if n % i == 0 {
-        return false
-      }
-    }
-  }
-  return true
-}
 
 //require 'mathn'
 //#num, factor = 317_584_931_803, 0
@@ -40,41 +17,41 @@ func p3isPrime(n uint64) bool {
 //puts "Largest factor is #{ factor }."
 
 func runP3() {
-  var ultimate uint64 = 600851475143
-  fmt.Printf("Largest prime factor of %d\n", ultimate)
+	var ultimate uint64 = 600851475143
+	fmt.Printf("Largest prime factor of %d\n", ultimate)
 
-  var factor uint64 = 1
+	var factor uint64 = 1
 
-  for ; ultimate > 1 ; {
-    factor = p3nextPrime(factor)
-    for ;; {
-      if ultimate % factor == 0 {
-        ultimate /= factor
-      } else {
-        break
-      }
-    }
-  }
+	for ultimate > 1 {
+		factor = nextPrime(factor)
+		for {
+			if ultimate%factor == 0 {
+				ultimate /= factor
+			} else {
+				break
+			}
+		}
+	}
 
-  fmt.Println(factor)
+	fmt.Println(factor)
 
-  //var i uint64 = ultimate / 2
-  //if i % 2 == 0 {
-  //  i--
-  //}
-  //for ; i > 2; i -= 2 {
-  //  if (i-1) % 1000000 == 0 {
-  //    fmt.Printf("%d...\n", i)
-  //  }
-  //  if ultimate % i == 0 {
-  //    if p3isPrime(i) {
-  //      fmt.Println(i)
-  //      break
-  //    }
-  //  }
-  //}
+	//var i uint64 = ultimate / 2
+	//if i % 2 == 0 {
+	//  i--
+	//}
+	//for ; i > 2; i -= 2 {
+	//  if (i-1) % 1000000 == 0 {
+	//    fmt.Printf("%d...\n", i)
+	//  }
+	//  if ultimate % i == 0 {
+	//    if p3isPrime(i) {
+	//      fmt.Println(i)
+	//      break
+	//    }
+	//  }
+	//}
 }
 
 func init() {
-  addProb("3", func() { runP3() })
+	addProb("3", func() { runP3() })
 }

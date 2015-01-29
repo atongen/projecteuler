@@ -9,15 +9,15 @@ What is the 10 001st prime number?
 import "fmt"
 
 func runP7() {
-  var p uint64 = 1
-  //t := 6
-  t := 10001
-  for i := 1; i <= t; i++ {
-    p = p3nextPrime(uint64(p))
-    fmt.Printf("%d %d\n", i, p)
-  }
+	var p uint64 = 1
+	//t := 6
+	t := 10001
+	for i := 1; i <= t; i++ {
+		p = nextPrime(uint64(p))
+		fmt.Printf("%d %d\n", i, p)
+	}
 }
 
 func init() {
-  addProb("7", func() { runP7() })
+	addProb("7", func() { runP7() })
 }

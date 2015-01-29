@@ -1,7 +1,7 @@
 package main
 
 import (
-  "fmt"
+	"fmt"
 )
 
 /*
@@ -11,17 +11,17 @@ Find the sum of all the primes below two million.
 */
 
 func runP10() {
-  var sum uint64 = 0
-  var max uint64 = 2000000
-  //var max uint64 = 10
-  var n uint64 = 2
-  for ; n < max ; n = p3nextPrime(uint64(n)) {
-    fmt.Println(n)
-    sum += n
-  }
-  fmt.Println(sum)
+	var sum uint64 = 0
+	var max uint64 = 2000000
+	//var max uint64 = 10
+	var n uint64 = 2
+	for ; n < max; n = nextPrime(uint64(n)) {
+		fmt.Println(n)
+		sum += n
+	}
+	fmt.Println(sum)
 }
 
 func init() {
-  addProb("10", func() { runP10() })
+	addProb("10", func() { runP10() })
 }
