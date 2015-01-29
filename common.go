@@ -2,6 +2,7 @@ package main
 
 import (
 	"math"
+	"strconv"
 )
 
 func nextPrime(n uint64) uint64 {
@@ -24,4 +25,17 @@ func isPrime(n uint64) bool {
 		}
 	}
 	return true
+}
+
+func reverseStr(s string) string {
+	runes := []rune(s)
+	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+		runes[i], runes[j] = runes[j], runes[i]
+	}
+	return string(runes)
+}
+
+func isPalindrome(n int) bool {
+	v := strconv.FormatInt(int64(n), 10)
+	return v == reverseStr(v)
 }
