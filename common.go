@@ -39,3 +39,19 @@ func isPalindrome(n int) bool {
 	v := strconv.FormatInt(int64(n), 10)
 	return v == reverseStr(v)
 }
+
+func sumOfSquares(n int) uint64 {
+	var i uint64 = 0
+	for j := 1; j <= n; j++ {
+		i += uint64(j * j)
+	}
+	return i
+}
+
+func squareOfSum(n int) uint64 {
+	var sum uint64 = 0
+	for i := 1; i <= n; i++ {
+		sum += uint64(i)
+	}
+	return sum * sum
+}
