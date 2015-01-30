@@ -49,9 +49,42 @@ func sumOfSquares(n int) uint64 {
 }
 
 func squareOfSum(n int) uint64 {
+	var triangle uint64 = ithTriangle(n)
+	return triangle * triangle
+}
+
+func ithTriangle(n int) uint64 {
 	var sum uint64 = 0
 	for i := 1; i <= n; i++ {
 		sum += uint64(i)
 	}
-	return sum * sum
+	return sum
+}
+
+func factors(n int) []int {
+	max := int(math.Ceil(math.Sqrt(float64(n))))
+	f := make([]int, 0)
+	for i := 1; i <= max; i++ {
+		if n%i == 0 && !intInSlice(f, i) {
+			f = append(f, i)
+			div := n / i
+			if !intInSlice(f, div) {
+				f = append(f, div)
+			}
+		}
+	}
+	return f
+}
+
+func numFactors(n int) int {
+	return len(factors(n))
+}
+
+func intInSlice(list []int, a int) bool {
+	for _, b := range list {
+		if b == a {
+			return true
+		}
+	}
+	return false
 }
