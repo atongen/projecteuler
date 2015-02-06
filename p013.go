@@ -1,9 +1,21 @@
 package main
 
 /*
-Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
+ * Problem #13 - Large sum
+ * https://projecteuler.net/problem=13
+ *
+ * Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
+ *
+ */
 
-37107287533902102798797998220837590246510135740250
+import (
+	"fmt"
+	"log"
+	"strconv"
+	"strings"
+)
+
+var p013NumStr string = `37107287533902102798797998220837590246510135740250
 46376937677490009712648124896970078050417018260538
 74324986199524741059474233309513058123726617309629
 91942213363574161572522430563301811072406154908250
@@ -102,10 +114,45 @@ Work out the first ten digits of the sum of the following one-hundred 50-digit n
 77158542502016545090413245809786882778948721859617
 72107838435069186155435662884062257473692284509516
 20849603980134001723930671666823555245252804609722
-53503534226472524250874054075591789781264330331690
-*/
+53503534226472524250874054075591789781264330331690`
+
+func p013GetData() [][]int {
+	data := make([][]int, 100)
+	for i := range data {
+		data[i] = make([]int, 50)
+	}
+
+	for i, str := range strings.Split(p013NumStr, "\n") {
+		for j, char := range strings.Split(str, "") {
+			val, err := strconv.ParseInt(char, 10, 8)
+			if err != nil {
+				log.Fatalln("Invalid int conversion", val)
+			}
+			data[i][j] = int(val)
+		}
+	}
+
+	return data
+}
+
+func p013ColumnSum(data [][]int) map[int]int {
+	columns := make(map[int]int)
+
+	for j := 0; j < 50; j++ {
+		sum := 0
+		for i := 0; i < 100; i++ {
+			sum += data[i][j]
+		}
+		columns[j] = sum
+	}
+
+	return columns
+}
 
 func runP13() {
+	data := p013GetData()
+	columns := p013ColumnSum(data)
+	fmt.Println(columns)
 }
 
 // Solution is
