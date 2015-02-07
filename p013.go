@@ -123,7 +123,7 @@ func p013GetData() [][]int {
 	}
 
 	for i, str := range strings.Split(p013NumStr, "\n") {
-		for j, char := range strings.Split(str, "") {
+		for j, char := range strings.Split(reverseStr(str), "") {
 			val, err := strconv.ParseInt(char, 10, 8)
 			if err != nil {
 				log.Fatalln("Invalid int conversion", val)
@@ -137,7 +137,7 @@ func p013GetData() [][]int {
 
 func p013ColumnSum(data [][]int) map[int]int {
 	columns := make(map[int]int)
-
+	// make generic
 	for j := 0; j < 50; j++ {
 		sum := 0
 		for i := 0; i < 100; i++ {
@@ -149,10 +149,47 @@ func p013ColumnSum(data [][]int) map[int]int {
 	return columns
 }
 
+func p013Abacus(columns map[int]int) []int {
+	abacus := make([]int, 0)
+
+	// jth place
+	for j := 0; j < 50; j++ {
+		components := p013IntComponents(columns[j])
+
+		for i := 0; i < 3; i++ {
+			idx := j + i
+			if len(abacus) < idx {
+				abacus = append(abacus, 0)
+			}
+			//sum :=
+		}
+	}
+
+	return abacus
+}
+
+func p013IntComponents(int) []int {
+	result := make([]int, 0)
+
+	str := strconv.FormatInt(int64(int), 10)
+	rev := reverseStr(str)
+
+	for i, char := range strings.Split(rev, "") {
+		val, err := strconv.ParseInt(char, 10, 8)
+		if err != nil {
+			log.Fatalln("Invalid int conversion", val)
+		}
+		result = append(result, int(val))
+	}
+
+	return result
+}
+
 func runP13() {
 	data := p013GetData()
 	columns := p013ColumnSum(data)
-	fmt.Println(columns)
+	result := p013Abacus(columns)
+	fmt.Println(result)
 }
 
 // Solution is
