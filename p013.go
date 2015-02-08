@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"log"
 	"strconv"
@@ -210,17 +209,6 @@ func p013StrComponents(str string) []int {
 	return result
 }
 
-// p013JoinInts returns a string of ints joined from slice
-func p013JoinInts(data []int) string {
-	var buffer bytes.Buffer
-
-	for i := 0; i < len(data); i++ {
-		buffer.WriteString(strconv.FormatInt(int64(data[i]), 10))
-	}
-
-	return buffer.String()
-}
-
 // p013MaxRowLength returns the length of the longest row
 func p013MaxRowLength(data [][]int) int {
 	max := 0
@@ -241,7 +229,7 @@ func p013PrintData(data [][]int) {
 	max := p013MaxRowLength(data)
 
 	for _, row := range data {
-		str := reverseStr(p013JoinInts(row))
+		str := reverseStr(joinInts(row))
 		fmt.Printf("%0"+strconv.FormatInt(int64(max), 10)+"s\n", str)
 	}
 }
@@ -260,7 +248,7 @@ func runP13() {
 	data := p013GetData(p013NumStr)
 	//data := p013GetData(p013TestNumStr)
 	result := p013Sum(data)
-	resultStr := p013JoinInts(result)
+	resultStr := joinInts(result)
 	fmt.Println(reverseStr(resultStr)[:10])
 }
 

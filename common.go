@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"math"
 	"strconv"
 )
@@ -87,4 +88,15 @@ func intInSlice(list []int, a int) bool {
 		}
 	}
 	return false
+}
+
+// joinInts returns a string of ints joined from slice
+func joinInts(data []int) string {
+	var buffer bytes.Buffer
+
+	for i := 0; i < len(data); i++ {
+		buffer.WriteString(strconv.FormatInt(int64(data[i]), 10))
+	}
+
+	return buffer.String()
 }
