@@ -1,21 +1,15 @@
 package main
 
-/*
- * Problem #13 - Large sum
- * https://projecteuler.net/problem=13
- *
- * Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
- *
- */
-
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"strconv"
 	"strings"
 )
 
-var p013NumStr string = `37107287533902102798797998220837590246510135740250
+var p013NumStr string = `
+37107287533902102798797998220837590246510135740250
 46376937677490009712648124896970078050417018260538
 74324986199524741059474233309513058123726617309629
 91942213363574161572522430563301811072406154908250
@@ -116,65 +110,96 @@ var p013NumStr string = `37107287533902102798797998220837590246510135740250
 20849603980134001723930671666823555245252804609722
 53503534226472524250874054075591789781264330331690`
 
-func p013GetData() [][]int {
-	data := make([][]int, 100)
-	for i := range data {
-		data[i] = make([]int, 50)
-	}
+// sum is 206008847
+var p013TestNumStr string = `
+34562345
+72840284
+59120475
+39485743
+`
 
-	for i, str := range strings.Split(p013NumStr, "\n") {
-		for j, char := range strings.Split(reverseStr(str), "") {
-			val, err := strconv.ParseInt(char, 10, 8)
-			if err != nil {
-				log.Fatalln("Invalid int conversion", val)
-			}
-			data[i][j] = int(val)
+// p013GetData converts a string representation of integers separated
+// by newlines into a 2-dim slice
+func p013GetData(str string) [][]int {
+	data := make([][]int, 0)
+
+	for _, row := range strings.Split(str, "\n") {
+		if len(row) > 0 {
+			rowData := p013StrComponents(row)
+			data = append(data, rowData)
 		}
 	}
 
 	return data
 }
 
-func p013ColumnSum(data [][]int) map[int]int {
-	columns := make(map[int]int)
-	// make generic
-	for j := 0; j < 50; j++ {
-		sum := 0
-		for i := 0; i < 100; i++ {
-			sum += data[i][j]
-		}
-		columns[j] = sum
-	}
-
-	return columns
-}
-
-func p013Abacus(columns map[int]int) []int {
+// p013Sum calculates the sum of arbitrary length integers in the
+// form of a 2-dim slice
+func p013Sum(data [][]int) []int {
 	abacus := make([]int, 0)
 
-	// jth place
-	for j := 0; j < 50; j++ {
-		components := p013IntComponents(columns[j])
+	for j := 0; ; j++ {
+		columnSum := p013ColumnSum(data, j)
 
-		for i := 0; i < 3; i++ {
-			idx := j + i
-			if len(abacus) < idx {
-				abacus = append(abacus, 0)
-			}
-			//sum :=
+		if columnSum == 0 {
+			break
 		}
+
+		intComponents := p013IntComponents(columnSum)
+
+		// add least significant digit to the abacus result
+		abacus = append(abacus, intComponents[0])
+
+		newRow := make([]int, j+len(intComponents))
+
+		// fill least significant digits with zeros
+		for n := 0; n < j; n++ {
+			newRow[n] = 0
+		}
+
+		// add components from new sum
+		for n := 0; n < len(intComponents); n++ {
+			newRow[j+n] = intComponents[n]
+		}
+
+		data = append(data, newRow)
 	}
+
+	//p013PrintData(data)
 
 	return abacus
 }
 
-func p013IntComponents(int) []int {
+// p013ColumnSum returns the sum of column j in 2-dim data slice
+func p013ColumnSum(data [][]int, j int) int {
+	sum := 0
+
+	for _, row := range data {
+		if len(row) > j {
+			sum += row[j]
+		}
+	}
+
+	return sum
+}
+
+// p013IntComponents returns a slice of integers from the int
+// representation
+//
+// delegates to p013StrComponents
+func p013IntComponents(val int) []int {
+	str := strconv.FormatInt(int64(val), 10)
+	return p013StrComponents(str)
+}
+
+// p013StrComponents returns a slice of integers from the string
+// representation
+func p013StrComponents(str string) []int {
 	result := make([]int, 0)
 
-	str := strconv.FormatInt(int64(int), 10)
 	rev := reverseStr(str)
 
-	for i, char := range strings.Split(rev, "") {
+	for _, char := range strings.Split(rev, "") {
 		val, err := strconv.ParseInt(char, 10, 8)
 		if err != nil {
 			log.Fatalln("Invalid int conversion", val)
@@ -185,14 +210,60 @@ func p013IntComponents(int) []int {
 	return result
 }
 
-func runP13() {
-	data := p013GetData()
-	columns := p013ColumnSum(data)
-	result := p013Abacus(columns)
-	fmt.Println(result)
+// p013JoinInts returns a string of ints joined from slice
+func p013JoinInts(data []int) string {
+	var buffer bytes.Buffer
+
+	for i := 0; i < len(data); i++ {
+		buffer.WriteString(strconv.FormatInt(int64(data[i]), 10))
+	}
+
+	return buffer.String()
 }
 
-// Solution is
+// p013MaxRowLength returns the length of the longest row
+func p013MaxRowLength(data [][]int) int {
+	max := 0
+
+	for _, row := range data {
+		rowLen := len(row)
+		if rowLen > max {
+			max = rowLen
+		}
+	}
+
+	return max
+}
+
+// p013PrintData prints each row left padded with zeros by the length of the
+// longest row
+func p013PrintData(data [][]int) {
+	max := p013MaxRowLength(data)
+
+	for _, row := range data {
+		str := reverseStr(p013JoinInts(row))
+		fmt.Printf("%0"+strconv.FormatInt(int64(max), 10)+"s\n", str)
+	}
+}
+
+/*
+ * Problem #13 - Large sum
+ * https://projecteuler.net/problem=13
+ *
+ * Work out the first ten digits of the sum of the following one-hundred
+ * 50-digit numbers.
+ *
+ * Solution is 5537376230
+ *
+ */
+func runP13() {
+	data := p013GetData(p013NumStr)
+	//data := p013GetData(p013TestNumStr)
+	result := p013Sum(data)
+	resultStr := p013JoinInts(result)
+	fmt.Println(reverseStr(resultStr)[:10])
+}
+
 func init() {
 	addProb("13", func() { runP13() })
 }
