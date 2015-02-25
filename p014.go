@@ -20,12 +20,42 @@ package main
  * Which starting number, under one million, produces the longest chain?
  *
  * NOTE: Once the chain starts the terms are allowed to go above one million.
- *
- * Solution is...
- *
  */
+
+var p014SeqLen = make(map[int]int)
+
+func p014GetSeqLen(n int) int {
+	if val, ok := p014SeqLen[n]; ok {
+		return val
+	} else if n == 1 {
+		return 1
+	} else {
+		return 1 + p014GetSeqLen(p014NextN(n))
+	}
+}
+
+func p014NextN(n int) int {
+	if n&1 == 1 {
+		// n is odd
+		return 3*n + 1
+	} else {
+		// n is even
+		return n / 2
+	}
+}
+
+// Solution: 837799 produces sequence of length 525
 func runP14() {
-	println("Solve me!")
+	n := 0
+	l := 0
+	for i := 1; i < 1000000; i++ {
+		v := p014GetSeqLen(i)
+		if v > l {
+			n = i
+			l = v
+		}
+	}
+	println(n, "produces sequence of length", l)
 }
 
 func init() {
