@@ -1,9 +1,18 @@
 package main
 
-import (
-	"strconv"
-	"strings"
-)
+var p016map = map[int]int{
+	1:  1,
+	2:  2,
+	3:  4,
+	4:  -1,
+	5:  -2,
+	6:  5,
+	7:  3,
+	8:  -5,
+	9:  -1,
+	10: 7,
+	11: 5,
+}
 
 func p016SumOfPowerDigit(n int) int {
 	if n < 0 {
@@ -11,22 +20,8 @@ func p016SumOfPowerDigit(n int) int {
 	}
 	if n == 0 {
 		return 1
-	} else if n == 1 {
-		return 2
-	} else {
-		return 2 * p016SumOfPowerDigit(n-1)
 	}
-}
-
-func p016SumOfDigits(n int) int {
-	s := strconv.Itoa(n)
-	ss := strings.Split(s, "")
-	sum := 0
-	for _, v := range ss {
-		i, _ := strconv.Atoi(v)
-		sum += i
-	}
-	return sum
+	return p016map[(n-1)%12] + p016SumOfPowerDigit(n-1)
 }
 
 /**
