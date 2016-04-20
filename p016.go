@@ -1,27 +1,20 @@
 package main
 
-var p016map = map[int]int{
-	1:  1,
-	2:  2,
-	3:  4,
-	4:  -1,
-	5:  -2,
-	6:  5,
-	7:  3,
-	8:  -5,
-	9:  -1,
-	10: 7,
-	11: 5,
-}
+import "math"
 
 func p016SumOfPowerDigit(n int) int {
 	if n < 0 {
-		panic("This doesn't work for negative numbers!")
+		panic("p016SumOfPowerDigit does not work for negative numbers!")
 	}
-	if n == 0 {
-		return 1
+	if n < 4 {
+		return int(math.Pow(float64(2.0), float64(n)))
+	} else if isEven(n) {
+		// even
+		return 2 * p016SumOfPowerDigit(n/2)
+	} else {
+		// odd
+		return p016SumOfPowerDigit(1) + p016SumOfPowerDigit(n-1)
 	}
-	return p016map[(n-1)%12] + p016SumOfPowerDigit(n-1)
 }
 
 /**

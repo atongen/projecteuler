@@ -27,3 +27,22 @@ func TestJoinInts(t *testing.T) {
 		t.Errorf("Joined version of slice is not %s", val)
 	}
 }
+
+func TestIsEven(t *testing.T) {
+	for _, tt := range []struct {
+		n int
+		r bool
+	}{
+		{-1, false},
+		{0, true},
+		{1, false},
+		{2, true},
+		{3, false},
+		{4, true},
+	} {
+		r := isEven(tt.n)
+		if r != tt.r {
+			t.Errorf("isEven(%d) => %t, want %t", tt.n, r, tt.r)
+		}
+	}
+}
