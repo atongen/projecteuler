@@ -1,20 +1,31 @@
 package main
 
-import "math"
+import (
+	"math/big"
+	"strconv"
+	"strings"
+)
+
+func p016BigPowerOf2(n int) *big.Int {
+	if n == 0 {
+		return big.NewInt(1)
+	} else if n == 1 {
+		return big.NewInt(2)
+	} else {
+		r := new(big.Int)
+		return r.Mul(big.NewInt(2), p016BigPowerOf2(n-1))
+	}
+}
 
 func p016SumOfPowerDigit(n int) int {
-	if n < 0 {
-		panic("p016SumOfPowerDigit does not work for negative numbers!")
+	str := p016BigPowerOf2(n).String()
+	digits := strings.Split(str, "")
+	result := 0
+	for _, d := range digits {
+		i, _ := strconv.Atoi(d)
+		result += i
 	}
-	if n < 4 {
-		return int(math.Pow(float64(2.0), float64(n)))
-	} else if isEven(n) {
-		// even
-		return 2 * p016SumOfPowerDigit(n/2)
-	} else {
-		// odd
-		return p016SumOfPowerDigit(1) + p016SumOfPowerDigit(n-1)
-	}
+	return result
 }
 
 /**
